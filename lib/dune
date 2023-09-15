@@ -1,0 +1,3 @@
+(library
+ (name lucid)
+ (modules term inference))
