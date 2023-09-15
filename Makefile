@@ -3,7 +3,11 @@
 
 default: build
 
-fmt:
+parser_generator:
+	opam exec -- ocamllex lib/lexer.mll
+	opam exec -- ocamlyacc lib/parser.mly
+
+fmt: parser_generator
 	opam exec -- dune build @fmt
 	opam exec -- dune promote
 
@@ -27,7 +31,7 @@ testf: fmt
 	opam exec -- dune runtest -f
 
 run: build
-	opam exec -- dune exec -- lucid
+	opam exec -- dune exec -- lucid examples/test.lucid
 
 raw_run: build
 	clear

@@ -1,0 +1,4 @@
+Definition identity := λx.x.
+Compute identity a.
+(* Infinite loops *)
+(* Compute (λx.x x)(λx.x x). *)

@@ -9,3 +9,6 @@
 *.cmxs
 *.cmxa
 _build
+lexer.ml
+parser.ml
+parser.mli

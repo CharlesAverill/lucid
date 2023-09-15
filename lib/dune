@@ -1,3 +1,4 @@
 (library
  (name lucid)
- (modules term inference))
+ (public_name lucid)
+ (modules term directive inference input lexer parser))

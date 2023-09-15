@@ -1,19 +1,15 @@
 type id_type = string
 
 type term =
-  | T
   | Var of id_type
+  | Lambda of (id_type * term)
   | Apply of (term * term)
-  | Lambda of (id_type * term * term)
-  | Forall of (id_type * term * term)
 
-type theorem = {
-  id: id_type;
-  theorem: term;
-  proof: term;
-}
+let rec string_of_term t =
+  match t with
+  | Var n -> Printf.sprintf "\"%s\"" n
+  | Lambda (n, t') -> Printf.sprintf "λ%s.%s" n (string_of_term t')
+  | Apply (t1, t2) ->
+      Printf.sprintf "((%s)(%s))" (string_of_term t1) (string_of_term t2)
 
-type func = 
-| Expr of term
-| Let of (id_type * term * func)
-| Theorem of (theorem * func)
+let print_term t = print_endline (string_of_term t)
