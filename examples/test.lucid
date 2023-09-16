@@ -17,6 +17,7 @@ Definition throwaway_uncallable := λ unc:(void->unit).().
 Compute throwaway_uncallable uncallable.
 
 (* Named type *)
-Definition named_type := unit -> unit.
+Definition 'named_type := unit -> unit.
+Check 'named_type.
 (* Doesn't work yet *)
-(* Check (λx:named_type.()) (\x:unit.()). *)
+(* Check λx:('named_type).(). *)

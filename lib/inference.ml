@@ -2,6 +2,7 @@ open Term_type
 open Term
 open Directive
 open Store
+open Typechecker
 
 let rec cas e1 e2 x : term =
   match e1 with
@@ -13,6 +14,7 @@ let rec cas e1 e2 x : term =
   | _ -> e1
 
 let rec eval_term (s : store) gamma t : term =
+  let _typecheck = type_of_term gamma t in
   match t with
   | Var n -> ( match s n with Some (Term e) -> e | _ -> t)
   | Lambda (x, xt, g, e) -> Lambda (x, xt, g, eval_term s g e)
