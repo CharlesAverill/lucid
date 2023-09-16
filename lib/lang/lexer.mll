@@ -4,6 +4,8 @@
     exception UnexpectedCharacter
 }
 
+let ident = ['A'-'Z' 'a'-'z' '_'] (['A'-'Z' 'a'-'z' '0'-'9' '_'])* 
+
 rule token = parse
     | [' ' '\t' '\r' '\n']          { token lexbuf }
     | '('                           { LEFT_PARENTHESIS }
@@ -12,19 +14,19 @@ rule token = parse
     | '.'                           { DOT }
     | ':'                           { COLON }
     | "->"                          { ARROW }
+    | ":="                          { SET }
+    | "(*"                          { comment lexbuf }
     | "void"                        { VOID }
     | "unit"                        { UNIT }
     | "Definition"                  { DEFINITION }
     | "Compute"                     { COMPUTE }
     | "Check"                       { CHECK }
-    | ['A'-'Z' 'a'-'z' '_'] (['A'-'Z' 'a'-'z' '0'-'9' '_'])*       
-                                    { IDENTIFIER (lexeme lexbuf) }
-    | ":="                          { SET }
-    | "(*"                          { comment lexbuf }
+    | '\'' ident                    { TYPE_IDENTIFIER (lexeme lexbuf) }
+    | ident                         { IDENTIFIER (lexeme lexbuf) }
     | eof                           { EOF }
     | _ { raise UnexpectedCharacter }
 
 and comment = parse
     | "*)"                          { token lexbuf }
-    | _                             { comment lexbuf }
     | eof                           { failwith "Unexpected EOF" }
+    | _                             { comment lexbuf }

@@ -10,6 +10,7 @@
 %token UNIT VOID
 
 %token <string> IDENTIFIER
+%token <string> TYPE_IDENTIFIER
 
 %token LEFT_PARENTHESIS
 %token RIGHT_PARENTHESIS
@@ -23,26 +24,27 @@
 
 %start main
 %type <Lucid.Directive.directives> main
+%type <Lucid.Directive.directive> directive
+%type <Lucid.Term.term> term
+%type <Lucid.Term.term> appTerm
+%type <Lucid.Term.term> atomicTerm
+%type <Lucid.Term_type.term_type> term_type
+
 
 %%
 
 main :
     EOF
       { [] }
-  | command DOT main
+  | directive DOT main
       { $1::$3 }
 
-command :
-    COMPUTE term
-      { Compute ($2) }
-  | DEFINITION IDENTIFIER SET term
-      { Definition ($2, Term $4) }
-  | DEFINITION IDENTIFIER SET term_type
-      { Definition ($2, Type $4) }
-  | CHECK term 
-      { Check (Term $2) }
-  | CHECK term_type
-      { Check (Type $2) }
+directive : 
+    COMPUTE term                                { Compute ($2) }
+  | DEFINITION IDENTIFIER SET term              { Definition ($2, Term $4) }
+  | DEFINITION TYPE_IDENTIFIER SET term_type    { Definition ($2, Type $4) }
+  | CHECK term                                  { Check (Term $2) }
+  | CHECK term_type                             { Check (Type $2) }
 
 term :
     appTerm
@@ -55,6 +57,8 @@ term_type :
       { VoidT }
     | UNIT 
       { UnitT }
+    | TYPE_IDENTIFIER
+        { TypeVar $1 }
     | term_type ARROW term_type 
       { ArrowT ($1, $3) }
     | LEFT_PARENTHESIS term_type RIGHT_PARENTHESIS
