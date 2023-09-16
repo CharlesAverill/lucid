@@ -44,7 +44,6 @@ directive :
   | DEFINITION IDENTIFIER SET term              { Definition ($2, Term $4) }
   | DEFINITION TYPE_IDENTIFIER SET term_type    { Definition ($2, Type $4) }
   | CHECK term                                  { Check (Term $2) }
-//   | CHECK TYPE_IDENTIFIER                       { Check (match !_STORE $2 with Some t -> t | _ -> failwith "ugh") }
   | CHECK term_type                             { Check (Type $2) }
 
 term :
@@ -59,7 +58,7 @@ term_type :
     | UNIT 
       { UnitT }
     | TYPE_IDENTIFIER
-        { match !_STORE $1 with Some (Type t) -> t | _ -> failwith "bruh" }
+        { TypeVar $1 }
     | term_type ARROW term_type 
       { ArrowT ($1, $3) }
     | LEFT_PARENTHESIS term_type RIGHT_PARENTHESIS
