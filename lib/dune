@@ -1,4 +1,4 @@
 (library
  (name lucid)
  (public_name lucid)
- (modules term directive inference input lexer parser))
+ (modules term_type term store directive inference))

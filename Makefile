@@ -4,8 +4,8 @@
 default: build
 
 parser_generator:
-	opam exec -- ocamllex lib/lexer.mll
-	opam exec -- ocamlyacc lib/parser.mly
+	opam exec -- ocamllex lib/lang/lexer.mll
+	opam exec -- ocamlyacc lib/lang/parser.mly
 
 fmt: parser_generator
 	opam exec -- dune build @fmt

@@ -10,8 +10,13 @@ rule token = parse
     | ')'                           { RIGHT_PARENTHESIS }
     | '\\' | "λ"                    { LAMBDA }
     | '.'                           { DOT }
+    | ':'                           { COLON }
+    | "->"                          { ARROW }
+    | "void"                        { VOID }
+    | "unit"                        { UNIT }
     | "Definition"                  { DEFINITION }
     | "Compute"                     { COMPUTE }
+    | "Check"                       { CHECK }
     | ['A'-'Z' 'a'-'z' '_'] (['A'-'Z' 'a'-'z' '0'-'9' '_'])*       
                                     { IDENTIFIER (lexeme lexbuf) }
     | ":="                          { SET }

@@ -1,4 +1,4 @@
 (executable
  (public_name lucid)
  (name main)
- (libraries lucid))
+ (libraries lucid lucid.lang))

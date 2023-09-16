@@ -1,17 +1,9 @@
-open Lucid.Input
+open Lang.Input
 open Lucid.Inference
-
-(* open Lucid.Term *)
-open Lucid.Directive
+open Lucid.Term_type
+open Lucid.Store
 
 let _ =
   let x = parse_file Sys.argv.(1) in
-  let store = empty_store () in
-  eval_directives store x ""
-(* print_term (eval_term x) *)
-
-(* let _ = print_term (eval
-     (Apply ((Lambda ("x", Var "x")), (Lambda ("y", Var "y"))))
-   )
-
-   let () = print_endline "Hello, World!" *)
+  let gamma = empty_typing_context () in
+  eval_directives !_STORE gamma x ""

@@ -1,4 +1,22 @@
-Definition identity := λx.x.
-Compute identity a.
-(* Infinite loops *)
-(* Compute (λx.x x)(λx.x x). *)
+Definition fun := λx:(unit->unit).x.
+Compute fun (\x:unit.x).
+Check fun.
+
+Check unit.
+Check unit -> unit -> unit -> unit.
+Check void -> unit.
+
+Definition uncallable := λx:void.().
+Check uncallable.
+
+(* Ill-typed *)
+(* Compute uncallable (). *)
+
+(* Well-typed *)
+Definition throwaway_uncallable := λ unc:(void->unit).().
+Compute throwaway_uncallable uncallable.
+
+(* Named type *)
+Definition named_type := unit -> unit.
+(* Doesn't work yet *)
+(* Check (λx:named_type.()) (\x:unit.()). *)

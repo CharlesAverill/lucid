@@ -1,0 +1,5 @@
+(library
+ (name lang)
+ (public_name lucid.lang)
+ (modules input lexer parser)
+ (libraries lucid))

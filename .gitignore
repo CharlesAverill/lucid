@@ -12,3 +12,4 @@ _build
 lexer.ml
 parser.ml
 parser.mli
+*.output
