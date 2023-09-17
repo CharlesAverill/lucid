@@ -1,0 +1,30 @@
+Definition 'nat := (unit -> unit) -> (unit -> unit).
+
+Definition zero := λf:(unit -> unit).(λx:unit.x).
+
+Definition successor :=
+    \n:'nat.\f:(unit -> unit).\x:unit. f (n f x).
+
+Definition one := (successor zero).
+Definition two := (successor (successor zero)).
+
+Definition plus :=
+    \m:'nat.\n:'nat.\f:(unit -> unit).\x:unit. m f (n f x).
+
+(* λf:(unit -> unit).λx:unit.x *)
+Compute zero.
+(* λf:(unit -> unit).λx:unit.(f x) *)
+Compute successor zero.
+(* λf:(unit -> unit).λx:unit.(f (f x)) *)
+Compute successor one.
+(* λf:(unit -> unit).λx:unit.(f (f (f x))) *)
+Compute successor two.
+
+(* λf:(unit -> unit).λx:unit.(f x) *)
+Compute plus zero zero.
+(* λf:(unit -> unit).λx:unit.(f (f (f x))) *)
+Compute plus one two.
+(* λf:(unit -> unit).λx:unit.(f (f (f x))) *)
+Compute plus two one.
+(* λf:(unit -> unit).λx:unit.(f (f x)) *)
+Compute plus two zero.

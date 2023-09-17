@@ -6,7 +6,7 @@
 %}
 
 %token LAMBDA
-%token DEFINITION COMPUTE CHECK
+%token DEFINITION COMPUTE CHECK PRINT
 %token UNIT VOID
 
 %token <string> IDENTIFIER

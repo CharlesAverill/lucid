@@ -13,6 +13,6 @@ let rec string_of_term t =
   | Lambda (n, lt, _, t') ->
       Printf.sprintf "λ%s:%s.%s" n (string_of_term_type lt) (string_of_term t')
   | Apply (t1, t2) ->
-      Printf.sprintf "((%s)(%s))" (string_of_term t1) (string_of_term t2)
+      Printf.sprintf "(%s %s)" (string_of_term t1) (string_of_term t2)
 
 let print_term t = print_endline (string_of_term t)

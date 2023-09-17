@@ -19,5 +19,4 @@ Compute throwaway_uncallable uncallable.
 (* Named type *)
 Definition 'named_type := unit -> unit.
 Check 'named_type.
-(* Doesn't work yet *)
-(* Check λx:('named_type).(). *)
+Check λx:('named_type).().

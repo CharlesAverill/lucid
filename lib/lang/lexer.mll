@@ -21,6 +21,7 @@ rule token = parse
     | "Definition"                  { DEFINITION }
     | "Compute"                     { COMPUTE }
     | "Check"                       { CHECK }
+    | "Print"                       { PRINT }
     | '\'' ident                    { TYPE_IDENTIFIER (lexeme lexbuf) }
     | ident                         { IDENTIFIER (lexeme lexbuf) }
     | eof                           { EOF }
