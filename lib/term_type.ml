@@ -1,12 +1,10 @@
-type id_type = string
-
 type term_type =
   | VoidT
   | UnitT
-  | TypeVar of id_type
+  | TypeVar of string
   | ArrowT of (term_type * term_type)
 
-type typing_context = id_type -> term_type option
+type typing_context = string -> term_type option
 
 let merge_typing_contexts g1 g2 id =
   match g1 id with Some lt -> Some lt | None -> g2 id

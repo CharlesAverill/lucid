@@ -6,4 +6,4 @@ open Lucid.Store
 let _ =
   let x = parse_file Sys.argv.(1) in
   let gamma = empty_typing_context () in
-  eval_directives !_STORE gamma x ""
+  eval_vernaculars !_STORE gamma x ""

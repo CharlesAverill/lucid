@@ -2,8 +2,8 @@ open Term_type
 open Term
 open Store
 
-let reduce_type (st : store) t =
-  match t with TypeVar s -> st s | _ -> Some (Type t)
+let rec reduce_type (st : store) t =
+  match t with TypeVar s -> (match st s with Some (Type x) -> reduce_type st x | _ -> st s) | _ -> Some (Type t)
 
 let rec type_of_term gamma (s : store) = function
   | Unit -> UnitT

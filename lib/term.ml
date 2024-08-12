@@ -2,8 +2,8 @@ open Term_type
 
 type term =
   | Unit
-  | Var of id_type
-  | Lambda of (id_type * term_type * typing_context * term)
+  | Var of string
+  | Lambda of (string * term_type * typing_context * term)
   | Apply of (term * term)
 
 let rec string_of_term t =

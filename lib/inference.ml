@@ -1,6 +1,6 @@
 open Term_type
 open Term
-open Directive
+open Vernacular
 open Store
 open Typechecker
 
@@ -18,26 +18,19 @@ let rec eval_term (s : store) gamma t : term =
   let _typecheck = type_of_term gamma s t in
   match t with
   | Var n -> ( match s n with Some (Term e) -> e | _ -> t)
-  | Lambda (x, xt, g, e) ->
-      Lambda (x, xt, g, eval_term s (merge_typing_contexts g gamma) e)
-  | Apply (Lambda (x, xt, g, e), y) ->
-      let xt' =
-        match xt with
-        | TypeVar tv -> ( match s tv with Some (Type n) -> n | _ -> xt)
-        | _ -> xt
-      in
-      if xt' = type_of_term gamma s y then
+  | Lambda _ -> t
+      (* Lambda (x, xt, g, eval_term (unfold_depth - 1) s (merge_typing_contexts g gamma) e) *)
+  | Apply (Lambda (x, _, g, e), y) ->
         eval_term s (merge_typing_contexts g gamma) (cas e y (Var x))
-      else failwith "Ill-typed expression"
   (* | Apply (Var n, y) ->
       print_endline ("Evaluating var on left " ^ (string_of_term t));
       eval_term s gamma (Apply (eval_term s gamma (Var n), y)) *)
   | Apply (x, y) ->
-      let x', y' = (eval_term s gamma x, eval_term s gamma y) in
+      let x', y' = (eval_term  s gamma x, eval_term s gamma y) in
       if x = x' && y = y' then t else eval_term s gamma (Apply (x', y'))
   | _ -> t
 
-let eval_directive (s : store) (g : typing_context) d =
+let eval_vernacular (s : store) (g : typing_context) d =
   match d with
   | Definition (name, Term expression) ->
       (* print_endline ("Updating s with " ^ name ^ " := " ^ (string_of_term expression));
@@ -56,8 +49,8 @@ let eval_directive (s : store) (g : typing_context) d =
       Printf.printf "%s\n    : Type\n" (string_of_term_type t);
       (s, g)
 
-let rec eval_directives (s : store) (g : typing_context) d =
+let rec eval_vernaculars (s : store) (g : typing_context) d =
   match d with
   | [] -> s
   | h :: t -> (
-      match eval_directive s g h with s', g' -> eval_directives s' g' t)
+      match eval_vernacular s g h with s', g' -> eval_vernaculars s' g' t)

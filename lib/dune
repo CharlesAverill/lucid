@@ -1,4 +1,4 @@
 (library
  (name lucid)
  (public_name lucid)
- (modules term_type term store typechecker directive inference))
+ (modules term_type term store typechecker vernacular inference term_or_type))

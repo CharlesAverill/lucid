@@ -28,3 +28,11 @@ Compute plus one two.
 Compute plus two one.
 (* λf:(unit -> unit).λx:unit.(f (f x)) *)
 Compute plus two zero.
+
+Definition 'natbool := 'nat -> 'nat -> 'nat.
+Definition true := \x:'nat.\y:'nat.x.
+Definition false := \x:'nat.\y:'nat.y.
+
+Definition ifthenelse := \x:'natbool.\y:'nat.\z:'nat.(x y z).
+
+Compute ifthenelse true one zero.
